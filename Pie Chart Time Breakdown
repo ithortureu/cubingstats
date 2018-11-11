@@ -1,0 +1,53 @@
+import plotly
+#Put your plotly username and API_KEY on the line below where specified
+plotly.tools.set_credentials_file(username='USERNAMEHERE', api_key='APIKEYHERE  ')
+import plotly.plotly as py
+import plotly.graph_objs as go
+
+#Copy list of times here, separated by comma, decimals are fine, I put an example so just replace them, currently times must be in seconds, not minutes
+times = [1.234, 2.345, 3.456]
+
+#Blank list to copy modified solves into
+newtimes = []
+for time in times:
+  #Rounds down every time
+  time = int(time)
+  #Adds time to new list
+  newtimes.append(time)
+#Sorts list lowest to highest
+newtimes.sort()
+#Gets length of new list, which is amount of solves
+solves = len(newtimes)
+#Set longest and shortest solve times
+longestSolve = max(newtimes)
+shortestSolve = min(newtimes)
+
+#Gives a frequency of each solve time
+timesfreq = {i: newtimes.count(i) for i in newtimes}
+#One list of all occurences
+print(newtimes)
+
+#Prints each value and occurence on a new line
+for i in timesfreq.items():
+  print(i)
+
+#Prints frequency and time on one line
+print ("The timesfreq list is " + str(timesfreq))
+
+#Sort dictionary into keys and values
+labellist = list(timesfreq.keys())
+valuelist = list(timesfreq.values())
+
+print ("The labellist is " + str(labellist))
+print ("The valuelist is " + str(valuelist))
+
+
+print(solves)
+print("Your longest solve was " + str(longestSolve) + " seconds and your shortest solve was " + str(shortestSolve) + " seconds")
+
+labels = labellist
+values = valuelist
+
+trace = go.Pie(labels=labels, values=values, textinfo = 'value + percent + label')
+
+py.iplot([trace], filename='basic_pie_chart')
